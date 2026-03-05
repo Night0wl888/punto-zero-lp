@@ -111,7 +111,7 @@ export default function LegacySection() {
               className="w-full md:w-1/2 relative overflow-hidden flex-shrink-0"
               style={{ aspectRatio: "4/5", maxHeight: "58vh" }}
             >
-              <img
+              <LazyImage
                 src={slide.image}
                 alt={slide.title}
                 className="w-full h-full object-cover"
