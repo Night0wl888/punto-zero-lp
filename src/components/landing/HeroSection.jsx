@@ -1,14 +1,6 @@
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 export default function HeroSection() {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.75;
-    }
-  }, []);
 
   return (
     <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
