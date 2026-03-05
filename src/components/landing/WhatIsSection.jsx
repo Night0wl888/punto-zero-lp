@@ -94,7 +94,7 @@ export default function WhatIsSection() {
             >
               Punto Zero es una plataforma de experiencias creada para reunir
               nuevamente a un círculo social que comparte historia, tradición
-              y comunidad.
+              y comunidad. Uniendo generaciones.
             </p>
             <p
               className="text-[#f0e6d3]/60 text-base leading-relaxed mb-6"
@@ -107,7 +107,7 @@ export default function WhatIsSection() {
               style={{ fontFamily: "'Georgia', serif" }}
             >
               Creamos encuentros cuidadosamente curados donde la música,
-              la hospitalidad y la comunidad se unen para crear experiencias
+              la hospitalidad y la comunidad se unen para vivir experiencias
               memorables.
             </p>
             <p
