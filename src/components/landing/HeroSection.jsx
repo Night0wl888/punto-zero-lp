@@ -24,10 +24,7 @@ export default function HeroSection() {
             backgroundRepeat: "repeat"
           }} />
 
-        {/* Vignette */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
-        {/* Warm tint overlay */}
-        <div className="absolute inset-0 z-10 bg-[#c8813a]/10" />
+
       </div>
 
       {/* Content */}
