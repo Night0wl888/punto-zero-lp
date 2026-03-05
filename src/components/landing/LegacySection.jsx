@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
@@ -29,147 +29,208 @@ const slides = [
 ];
 
 export default function LegacySection() {
-  const containerRef = useRef(null);
+  const sectionRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [locked, setLocked] = useState(false);
+  const scrollAccum = useRef(0);
+  const lastWheelTime = useRef(0);
 
+  // Lock scroll when section is in view and not all slides seen
   useEffect(() => {
-    const handleScroll = () => {
-      const el = containerRef.current;
+    const handleWheel = (e) => {
+      const el = sectionRef.current;
       if (!el) return;
 
       const rect = el.getBoundingClientRect();
-      const totalScrollable = el.offsetHeight - window.innerHeight;
-      const scrolled = -rect.top;
-      const rawProgress = scrolled / totalScrollable;
-      const clamped = Math.max(0, Math.min(1, rawProgress));
+      const inView = rect.top <= 10 && rect.bottom >= window.innerHeight - 10;
 
-      setProgress(clamped);
+      if (!inView) return;
 
-      const index = Math.min(
-        slides.length - 1,
-        Math.floor(clamped * slides.length)
-      );
-      setActiveIndex(index);
+      // If on last slide going down, unlock
+      if (activeIndex === slides.length - 1 && e.deltaY > 0) return;
+      // If on first slide going up, unlock
+      if (activeIndex === 0 && e.deltaY < 0) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const now = Date.now();
+      if (now - lastWheelTime.current < 80) {
+        lastWheelTime.current = now;
+        scrollAccum.current += e.deltaY;
+      } else {
+        scrollAccum.current = e.deltaY;
+        lastWheelTime.current = now;
+      }
+
+      if (Math.abs(scrollAccum.current) > 60) {
+        if (scrollAccum.current > 0 && activeIndex < slides.length - 1) {
+          setActiveIndex((i) => i + 1);
+        } else if (scrollAccum.current < 0 && activeIndex > 0) {
+          setActiveIndex((i) => i - 1);
+        }
+        scrollAccum.current = 0;
+      }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [activeIndex]);
+
+  // Touch support
+  const touchStart = useRef(null);
+  useEffect(() => {
+    const handleTouchStart = (e) => {
+      touchStart.current = e.touches[0].clientY;
+    };
+    const handleTouchEnd = (e) => {
+      const el = sectionRef.current;
+      if (!el || touchStart.current === null) return;
+      const rect = el.getBoundingClientRect();
+      const inView = rect.top <= 10 && rect.bottom >= window.innerHeight - 10;
+      if (!inView) return;
+
+      const delta = touchStart.current - e.changedTouches[0].clientY;
+      if (Math.abs(delta) < 40) return;
+
+      if (delta > 0 && activeIndex < slides.length - 1) {
+        e.preventDefault();
+        setActiveIndex((i) => i + 1);
+      } else if (delta < 0 && activeIndex > 0) {
+        e.preventDefault();
+        setActiveIndex((i) => i - 1);
+      }
+      touchStart.current = null;
+    };
+
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: false });
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [activeIndex]);
+
+  const slide = slides[activeIndex];
+  const isImageLeft = slide.layout === "image-left";
 
   return (
     <section
-      ref={containerRef}
-      style={{ height: `${slides.length * 60}vh` }}
-      className="relative"
+      ref={sectionRef}
+      className="relative bg-[#0a0a0a] h-screen flex flex-col overflow-hidden"
     >
-      {/* Sticky viewport */}
-      <div className="sticky top-0 h-screen bg-[#0a0a0a] overflow-hidden flex flex-col">
-        {/* Header */}
-        <div className="text-center pt-16 pb-4 px-6 flex-shrink-0">
-          <span
-            className="text-[#c8a96e]/60 text-xs tracking-[0.4em] uppercase block mb-3"
-            style={{ fontFamily: "system-ui, sans-serif" }}
+      {/* Header */}
+      <div className="text-center pt-14 pb-2 px-6 flex-shrink-0">
+        <span
+          className="text-[#c8a96e]/60 text-xs tracking-[0.4em] uppercase block mb-3"
+          style={{ fontFamily: "system-ui, sans-serif" }}
+        >
+          Nuestra historia
+        </span>
+        <h2
+          className="text-[#f0e6d3] font-bold"
+          style={{
+            fontFamily: "'Georgia', serif",
+            fontSize: "clamp(1rem, 1.8vw, 1.5rem)",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Honrando lo que fuimos,{" "}
+          <span className="text-[#c8a96e]">y escribiendo a donde vamos.</span>
+        </h2>
+      </div>
+
+      {/* Slide content */}
+      <div className="flex-1 flex items-center justify-center px-6 md:px-16 overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -60 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className={`flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-5xl w-full ${
+              isImageLeft ? "" : "md:flex-row-reverse"
+            }`}
           >
-            Nuestra historia
-          </span>
-          <h2
-            className="text-[#f0e6d3] font-bold"
-            style={{
-              fontFamily: "'Georgia', serif",
-              fontSize: "clamp(1rem, 2vw, 1.6rem)",
-              letterSpacing: "-0.01em",
-            }}
-          >
-            Honrando lo que fuimos,{" "}
-            <span className="text-[#c8a96e]">y escribiendo a donde vamos.</span>
-          </h2>
-        </div>
-
-        {/* Slides area */}
-        <div className="flex-1 relative">
-          {slides.map((slide, i) => {
-            const isActive = i === activeIndex;
-            const isImageLeft = slide.layout === "image-left";
-
-            return (
-              <motion.div
-                key={i}
-                initial={false}
-                animate={{
-                  opacity: isActive ? 1 : 0,
-                  y: isActive ? 0 : (i < activeIndex ? -30 : 30),
-                }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="absolute inset-0 flex items-center justify-center px-6 md:px-16"
-              >
-                <div
-                  className={`flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-5xl w-full ${
-                    isImageLeft ? "" : "md:flex-row-reverse"
-                  }`}
-                >
-                  {/* Image */}
-                  <div className="w-full md:w-1/2 relative overflow-hidden flex-shrink-0"
-                    style={{ aspectRatio: "4/5", maxHeight: "55vh" }}
-                  >
-                    <img
-                      src={slide.image}
-                      alt={slide.title}
-                      className="w-full h-full object-cover"
-                      style={{ filter: "sepia(0.3) brightness(0.85) contrast(1.1)" }}
-                    />
-                    <div className="absolute top-3 left-3 w-6 h-6 border-t border-l border-[#c8a96e]/50" />
-                    <div className="absolute bottom-3 right-3 w-6 h-6 border-b border-r border-[#c8a96e]/50" />
-                  </div>
-
-                  {/* Text */}
-                  <div className={`w-full md:w-1/2 ${isImageLeft ? "text-left" : "text-left md:text-right"}`}>
-                    <span
-                      className="text-[#c8a96e]/60 text-xs tracking-[0.4em] uppercase block mb-3"
-                      style={{ fontFamily: "system-ui, sans-serif" }}
-                    >
-                      {String(i + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
-                    </span>
-                    <div className={`w-8 h-px bg-[#c8a96e]/40 mb-5 ${isImageLeft ? "" : "md:ml-auto"}`} />
-                    <h3
-                      className="text-[#f0e6d3] font-bold mb-4"
-                      style={{
-                        fontFamily: "'Georgia', serif",
-                        fontSize: "clamp(1.4rem, 2.5vw, 2.2rem)",
-                        letterSpacing: "-0.02em",
-                        lineHeight: 1.2,
-                      }}
-                    >
-                      {slide.title}
-                    </h3>
-                    <p
-                      className="text-[#f0e6d3]/50 text-sm leading-relaxed"
-                      style={{ fontFamily: "system-ui, sans-serif", fontWeight: 300 }}
-                    >
-                      {slide.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Progress dots */}
-        <div className="flex justify-center gap-2 pb-10 flex-shrink-0">
-          {slides.map((_, i) => (
+            {/* Image */}
             <div
-              key={i}
-              className="rounded-full bg-[#c8a96e] transition-all duration-300"
-              style={{
-                width: i === activeIndex ? "24px" : "6px",
-                height: "6px",
-                opacity: i === activeIndex ? 1 : 0.3,
-              }}
-            />
-          ))}
-        </div>
+              className="w-full md:w-1/2 relative overflow-hidden flex-shrink-0"
+              style={{ aspectRatio: "4/5", maxHeight: "58vh" }}
+            >
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="w-full h-full object-cover"
+                style={{ filter: "sepia(0.3) brightness(0.85) contrast(1.1)" }}
+              />
+              <div className="absolute top-3 left-3 w-6 h-6 border-t border-l border-[#c8a96e]/50" />
+              <div className="absolute bottom-3 right-3 w-6 h-6 border-b border-r border-[#c8a96e]/50" />
+            </div>
+
+            {/* Text */}
+            <div className={`w-full md:w-1/2 ${isImageLeft ? "text-left" : "text-left md:text-right"}`}>
+              <span
+                className="text-[#c8a96e]/60 text-xs tracking-[0.4em] uppercase block mb-3"
+                style={{ fontFamily: "system-ui, sans-serif" }}
+              >
+                {String(activeIndex + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+              </span>
+              <div className={`w-8 h-px bg-[#c8a96e]/40 mb-4 ${isImageLeft ? "" : "md:ml-auto"}`} />
+              <h3
+                className="text-[#f0e6d3] font-bold mb-4"
+                style={{
+                  fontFamily: "'Georgia', serif",
+                  fontSize: "clamp(1.4rem, 2.5vw, 2.2rem)",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1.2,
+                }}
+              >
+                {slide.title}
+              </h3>
+              <p
+                className="text-[#f0e6d3]/50 text-sm leading-relaxed"
+                style={{ fontFamily: "system-ui, sans-serif", fontWeight: 300 }}
+              >
+                {slide.description}
+              </p>
+
+              {/* Arrow hints */}
+              <div className={`flex gap-3 mt-8 ${isImageLeft ? "" : "md:justify-end"}`}>
+                <button
+                  onClick={() => setActiveIndex((i) => Math.max(0, i - 1))}
+                  disabled={activeIndex === 0}
+                  className="w-10 h-10 border border-[#c8a96e]/30 flex items-center justify-center text-[#c8a96e] disabled:opacity-20 hover:border-[#c8a96e]/70 transition-all"
+                >
+                  ←
+                </button>
+                <button
+                  onClick={() => setActiveIndex((i) => Math.min(slides.length - 1, i + 1))}
+                  disabled={activeIndex === slides.length - 1}
+                  className="w-10 h-10 border border-[#c8a96e]/30 flex items-center justify-center text-[#c8a96e] disabled:opacity-20 hover:border-[#c8a96e]/70 transition-all"
+                >
+                  →
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Progress dots */}
+      <div className="flex justify-center gap-2 pb-8 flex-shrink-0">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveIndex(i)}
+            className="rounded-full bg-[#c8a96e] transition-all duration-300"
+            style={{
+              width: i === activeIndex ? "24px" : "6px",
+              height: "6px",
+              opacity: i === activeIndex ? 1 : 0.3,
+            }}
+          />
+        ))}
       </div>
     </section>
   );
