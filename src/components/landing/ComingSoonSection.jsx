@@ -28,6 +28,16 @@ export default function ComingSoonSection() {
         ))}
       </div>
 
+      {/* Background logo */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden>
+        <img
+          src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a8ff785be989ae9a64375e/4540abc4d_PUNTOZEROLOGO.png"
+          alt=""
+          className="w-[clamp(16rem,50vw,30rem)] opacity-[0.07]"
+          style={{ filter: "sepia(1) saturate(0.5) brightness(1.2)" }}
+        />
+      </div>
+
       <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
