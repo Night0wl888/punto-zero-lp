@@ -19,42 +19,8 @@ export default function AboutSection() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-[#c8a96e]/30 to-transparent" />
 
       <div className="max-w-6xl mx-auto">
-        {/* Stats row */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-0 border border-[#c8a96e]/10 mb-24"
-        >
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.8, delay: i * 0.15 }}
-              className="p-8 md:p-12 text-center border-r border-[#c8a96e]/10 last:border-r-0 border-b md:border-b-0 [&:nth-child(2)]:border-b-0 [&:nth-child(3)]:border-b-0"
-            >
-              <div
-                className="text-[#c8a96e] font-bold mb-2 leading-none"
-                style={{
-                  fontFamily: "'Georgia', serif",
-                  fontSize: "clamp(2rem, 5vw, 3.5rem)",
-                }}
-              >
-                {stat.value}
-              </div>
-              <div
-                className="text-[#f0e6d3]/40 text-xs tracking-[0.2em] uppercase"
-                style={{ fontFamily: "system-ui, sans-serif" }}
-              >
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
         {/* About text */}
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
