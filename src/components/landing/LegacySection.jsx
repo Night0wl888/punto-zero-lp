@@ -61,7 +61,7 @@ export default function LegacySection() {
   return (
     <section
       ref={containerRef}
-      style={{ height: `${slides.length * 100}vh` }}
+      style={{ height: `${slides.length * 60}vh` }}
       className="relative"
     >
       {/* Sticky viewport */}
