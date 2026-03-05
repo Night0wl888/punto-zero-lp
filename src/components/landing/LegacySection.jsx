@@ -51,8 +51,16 @@ export default function LegacySection() {
 
       const current = activeIndexRef.current;
 
-      // Allow scroll past if at boundaries
-      if (e.deltaY > 0 && current === slides.length - 1) return;
+      // At last slide scrolling down: jump to bottom of wrapper so next section appears immediately
+      if (e.deltaY > 0 && current === slides.length - 1) {
+        const wrapper = wrapperRef.current;
+        if (wrapper) {
+          const bottom = wrapper.offsetTop + wrapper.offsetHeight;
+          window.scrollTo({ top: bottom, behavior: "smooth" });
+        }
+        return;
+      }
+      // At first slide scrolling up: let normal scroll happen
       if (e.deltaY < 0 && current === 0) return;
 
       // Intercept scroll
