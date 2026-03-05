@@ -45,8 +45,8 @@ export default function LegacySection() {
     return () => clearInterval(intervalRef.current);
   }, []);
 
-  const goNext = () => setActiveIndex((i) => Math.min(slides.length - 1, i + 1));
-  const goPrev = () => setActiveIndex((i) => Math.max(0, i - 1));
+  const goNext = () => { setActiveIndex((i) => Math.min(slides.length - 1, i + 1)); resetInterval(); };
+  const goPrev = () => { setActiveIndex((i) => Math.max(0, i - 1)); resetInterval(); };
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
