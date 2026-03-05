@@ -17,7 +17,7 @@ export default function HypeSection() {
           src="https://i.pinimg.com/1200x/00/30/4a/00304a16887bc99398876b5923b0d77f.jpg"
           alt=""
           className="w-full h-full object-cover"
-          style={{ filter: "sepia(50%) brightness(0.2) contrast(1.2)" }}
+          style={{ filter: "brightness(0.45) contrast(1.1)" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/80 via-transparent to-[#0a0a0a]/90" />
         <div className="absolute inset-0 bg-[#0a0a0a]/40" />
