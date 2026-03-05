@@ -11,10 +11,10 @@ export default function Home() {
   return (
     <main className="bg-[#0a0a0a] overflow-x-hidden">
       <HeroSection />
+      <ComingSoonSection />
       <WhatIsSection />
       <LegacySection />
       <PhilosophySection />
-      <ComingSoonSection />
       <AboutSection />
       <HypeSection />
       <FooterSection />
