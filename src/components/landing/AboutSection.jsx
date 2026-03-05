@@ -45,7 +45,7 @@ export default function AboutSection() {
             </h2>
             <div className="w-12 h-px bg-[#c8a96e]/40 mb-8" />
             <p
-              className="text-[#f0e6d3]/50 text-base leading-relaxed"
+              className="text-[#f0e6d3]/50 text-base leading-relaxed mb-8"
               style={{ fontFamily: "system-ui, sans-serif", fontWeight: 300 }}
             >
               Punto Zero by Explicit Hospitality Group es una plataforma de
@@ -53,6 +53,20 @@ export default function AboutSection() {
               Nuestro enfoque combina hospitalidad, producción y curaduría para
               crear experiencias exclusivas donde la comunidad es protagonista.
             </p>
+            <a
+              href="https://www.instagram.com/explicitt.group/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 border border-[#c8a96e]/40 px-6 py-3 text-[#c8a96e] hover:bg-[#c8a96e]/10 transition-colors duration-300"
+              style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.75rem", letterSpacing: "0.2em" }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+              </svg>
+              @EXPLICITT.GROUP
+            </a>
           </motion.div>
 
           <motion.div
