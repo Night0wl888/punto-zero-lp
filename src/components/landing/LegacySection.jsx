@@ -116,6 +116,21 @@ export default function LegacySection() {
       touchStartY.current = null;
 
       if (Math.abs(delta) < 40) return;
+
+      const current = activeIndexRef.current;
+
+      // At last slide swiping up (delta > 0): jump to next section
+      if (delta > 0 && current === slides.length - 1) {
+        const wrapper = wrapperRef.current;
+        if (wrapper) {
+          const bottom = wrapper.offsetTop + wrapper.offsetHeight;
+          window.scrollTo({ top: bottom, behavior: "smooth" });
+        }
+        return;
+      }
+      // At first slide swiping down: let normal scroll happen
+      if (delta < 0 && current === 0) return;
+
       if (cooldown.current) return;
       cooldown.current = true;
       setTimeout(() => { cooldown.current = false; }, 700);
