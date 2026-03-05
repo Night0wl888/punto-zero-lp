@@ -79,6 +79,40 @@ export default function AboutSection() {
             ))}
           </motion.div>
         </div>
+
+        {/* Stats row */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1, delay: 0.6 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-0 border border-[#c8a96e]/10"
+        >
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.6 + i * 0.15 }}
+              className="p-8 md:p-12 text-center border-r border-[#c8a96e]/10 last:border-r-0 border-b md:border-b-0 [&:nth-child(2)]:border-b-0 [&:nth-child(3)]:border-b-0"
+            >
+              <div
+                className="text-[#c8a96e] font-bold mb-2 leading-none"
+                style={{
+                  fontFamily: "'Georgia', serif",
+                  fontSize: "clamp(2rem, 5vw, 3.5rem)",
+                }}
+              >
+                {stat.value}
+              </div>
+              <div
+                className="text-[#f0e6d3]/40 text-xs tracking-[0.2em] uppercase"
+                style={{ fontFamily: "system-ui, sans-serif" }}
+              >
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
