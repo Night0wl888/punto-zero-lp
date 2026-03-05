@@ -71,28 +71,28 @@ export default function ComingSoonSection() {
             el pasado con el futuro. Un encuentro que muchos esperaban
             sin saberlo.
           </p>
-          <p className="text-[#c8a96e]/70 mb-10 text-lg italic"
-          style={{ fontFamily: "'Georgia', serif" }}>
-            Pronto revelaremos más.
-          </p>
+          
+
+
+
 
           {/* Artist Teaser */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1.2, delay: 0.6 }}
-            className="mb-16 mx-auto max-w-sm"
-          >
+            className="mb-16 mx-auto max-w-sm">
+
             <div
               className="border border-[#c8a96e]/20 px-8 py-6 relative"
-              style={{ background: "linear-gradient(135deg, rgba(200,169,110,0.04), rgba(200,169,110,0.01))" }}
-            >
+              style={{ background: "linear-gradient(135deg, rgba(200,169,110,0.04), rgba(200,169,110,0.01))" }}>
+
               <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-[#c8a96e]/40" />
               <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-[#c8a96e]/40" />
               <p
                 className="text-[#c8a96e]/50 text-[9px] tracking-[0.5em] uppercase mb-3"
-                style={{ fontFamily: "system-ui, sans-serif" }}
-              >
+                style={{ fontFamily: "system-ui, sans-serif" }}>
+
                 Artista Principal
               </p>
               <p
@@ -101,9 +101,9 @@ export default function ComingSoonSection() {
                   fontFamily: "'Georgia', serif",
                   fontSize: "clamp(0.85rem, 1.5vw, 1rem)",
                   fontStyle: "italic",
-                  letterSpacing: "0.02em",
-                }}
-              >
+                  letterSpacing: "0.02em"
+                }}>
+
                 "Un ícono musical que une generaciones.<br />
                 Una noche que no olvidarás."
               </p>
@@ -111,8 +111,8 @@ export default function ComingSoonSection() {
                 <div className="h-px flex-1 bg-[#c8a96e]/20" />
                 <span
                   className="text-[#c8a96e]/40 text-[9px] tracking-[0.4em] uppercase"
-                  style={{ fontFamily: "system-ui, sans-serif" }}
-                >
+                  style={{ fontFamily: "system-ui, sans-serif" }}>
+
                   Por anunciarse
                 </span>
                 <div className="h-px flex-1 bg-[#c8a96e]/20" />
