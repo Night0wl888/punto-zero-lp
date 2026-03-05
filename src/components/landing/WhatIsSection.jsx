@@ -27,7 +27,7 @@ export default function WhatIsSection() {
           >
             <div className="relative aspect-[3/4] overflow-hidden">
               <LazyImage
-                src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80"
+                src="https://i.pinimg.com/1200x/ca/db/bb/cadbbbcc54b36657542b317ed6266b17.jpg"
                 alt=""
                 className="w-full h-full object-cover"
                 style={{ filter: "sepia(60%) brightness(0.5) contrast(1.2)" }}
