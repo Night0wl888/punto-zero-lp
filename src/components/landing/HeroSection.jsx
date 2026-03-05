@@ -23,10 +23,13 @@ export default function HeroSection() {
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
+          webkit-playsinline="true"
+          x5-playsinline="true"
           className="absolute inset-0 w-full h-full object-cover"
           style={{}}>
 
