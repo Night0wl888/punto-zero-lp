@@ -66,7 +66,7 @@ export default function WhatIsSection() {
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a8ff785be989ae9a64375e/4540abc4d_PUNTOZEROLOGO.png"
                 alt=""
-                className="w-[clamp(14rem,40vw,22rem)] opacity-[0.10]"
+                className="w-[clamp(18rem,50vw,50rem)] opacity-[0.28]"
                 style={{ filter: "sepia(1) saturate(0.5) brightness(1.2)" }}
               />
             </div>
