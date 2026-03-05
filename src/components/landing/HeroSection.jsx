@@ -36,12 +36,12 @@ export default function HeroSection() {
           <source src="https://res.cloudinary.com/dfre8n8qn/video/upload/v1772746868/copy_028F97FC-1079-4E4D-A791-22D5FD18FF3A_a6he8v.mov" type="video/mp4" />
         </video>
         {/* Grain overlay */}
-        <div
-          className="absolute inset-0 z-10 opacity-30"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`,
-            backgroundRepeat: "repeat"
-          }} />
+        <div className="opacity-0 absolute inset-0 z-10"
+
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`,
+          backgroundRepeat: "repeat"
+        }} />
 
 
       </div>
