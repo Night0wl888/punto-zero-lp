@@ -12,6 +12,7 @@ export default function Home() {
     <main className="bg-[#0a0a0a] overflow-x-hidden">
       <HeroSection />
       <WhatIsSection />
+      <LegacySection />
       <PhilosophySection />
       <ComingSoonSection />
       <AboutSection />
