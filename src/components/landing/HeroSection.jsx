@@ -14,20 +14,15 @@ export default function HeroSection() {
     <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-          style={{ filter: "sepia(60%) brightness(0.35) contrast(1.1)" }}>
-
-          <source
-            src="https://www.w3schools.com/html/mov_bbb.mp4"
-            type="video/mp4" />
-
-        </video>
+        <div className="w-full h-full" style={{ filter: "sepia(60%) brightness(0.35) contrast(1.1)" }}>
+          <iframe
+            src="https://www.youtube.com/embed/zHdq8HWtPlo?autoplay=1&mute=1&loop=1&playlist=zHdq8HWtPlo&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+            className="absolute inset-0 w-full h-full"
+            style={{ border: "none", transform: "scale(1.5)", transformOrigin: "center center" }}
+            allow="autoplay; fullscreen"
+            allowFullScreen
+          />
+        </div>
         {/* Grain overlay */}
         <div
           className="absolute inset-0 z-10 opacity-30"
