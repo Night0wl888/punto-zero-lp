@@ -12,7 +12,7 @@ export default function HeroSection() {
     if (playPromise !== undefined) {
       playPromise.catch(() => {
         // Retry on user interaction
-        const retry = () => { video.play(); document.removeEventListener("touchstart", retry); };
+        const retry = () => {video.play();document.removeEventListener("touchstart", retry);};
         document.addEventListener("touchstart", retry, { once: true });
       });
     }
@@ -47,55 +47,7 @@ export default function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-20 text-center px-6 max-w-4xl mx-auto">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="mb-8">
-
-          
-
-
-
-
-
-        </motion.div>
-
-        {/* Main Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.5 }}
-          className="mb-6">
-          <h1
-            className="text-[#f0e6d3] leading-tight"
-            style={{
-              fontFamily: "'Georgia', 'Times New Roman', serif",
-              fontSize: "clamp(2rem, 5.5vw, 4rem)",
-              letterSpacing: "-0.02em",
-              fontWeight: 700,
-              textShadow: "0 2px 40px rgba(0,0,0,0.6)"
-            }}>
-            Punto Zero
-          </h1>
-          <div className="flex items-center justify-center gap-4 mt-2">
-            <div className="h-px w-12 bg-[#c8a96e]/60" />
-            <span
-              className="text-[#c8a96e]"
-              style={{
-                fontFamily: "'Georgia', 'Times New Roman', serif",
-                fontSize: "clamp(0.9rem, 2vw, 1.2rem)",
-                letterSpacing: "0.12em",
-                fontStyle: "italic",
-                fontWeight: 400,
-              }}>
-              Donde la Tradición Encuentra su Origen
-            </span>
-            <div className="h-px w-12 bg-[#c8a96e]/60" />
-          </div>
-        </motion.div>
+      
 
 
 
@@ -111,34 +63,6 @@ export default function HeroSection() {
 
 
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.9 }}
-          className="text-[#f0e6d3]/70 mb-10"
-          style={{
-            fontFamily: "system-ui, sans-serif",
-            fontSize: "clamp(0.85rem, 1.8vw, 1.05rem)",
-            letterSpacing: "0.06em",
-            fontWeight: 300,
-            maxWidth: "520px",
-            margin: "0 auto 2.5rem",
-          }}>
-          Un reencuentro curado para el círculo social más selecto de Quito.
-        </motion.p>
-
-
-
-
-
-
-
-
-
-
-        {/* Body text */}
-        
 
 
 
@@ -150,21 +74,97 @@ export default function HeroSection() {
 
 
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.5 }}>
-
-          
 
 
 
 
 
 
-        </motion.div>
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* Scroll indicator */}
       <motion.div
