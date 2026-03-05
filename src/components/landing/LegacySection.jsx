@@ -37,7 +37,7 @@ export default function LegacySection() {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       setActiveIndex((i) => (i + 1) % slides.length);
-    }, 4000);
+    }, 8000);
   };
 
   useEffect(() => {
