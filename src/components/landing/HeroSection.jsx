@@ -112,7 +112,22 @@ export default function HeroSection() {
 
 
         {/* Subtitle */}
-        
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.9 }}
+          className="text-[#f0e6d3]/70 mb-10"
+          style={{
+            fontFamily: "system-ui, sans-serif",
+            fontSize: "clamp(0.85rem, 1.8vw, 1.05rem)",
+            letterSpacing: "0.06em",
+            fontWeight: 300,
+            maxWidth: "520px",
+            margin: "0 auto 2.5rem",
+          }}>
+          Un reencuentro curado para el círculo social más selecto de Quito.
+        </motion.p>
+
 
 
 
