@@ -1,6 +1,22 @@
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 export default function HeroSection() {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Retry on user interaction
+        const retry = () => { video.play(); document.removeEventListener("touchstart", retry); };
+        document.addEventListener("touchstart", retry, { once: true });
+      });
+    }
+  }, []);
 
   return (
     <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
