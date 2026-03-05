@@ -59,7 +59,17 @@ export default function WhatIsSection() {
             initial={{ opacity: 0, x: 40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, delay: 0.2 }}
+            className="relative"
           >
+            {/* Background logo */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden>
+              <img
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a8ff785be989ae9a64375e/4540abc4d_PUNTOZEROLOGO.png"
+                alt=""
+                className="w-[clamp(14rem,40vw,22rem)] opacity-[0.10]"
+                style={{ filter: "sepia(1) saturate(0.5) brightness(1.2)" }}
+              />
+            </div>
             <span
               className="text-[#c8a96e]/60 text-xs tracking-[0.4em] uppercase block mb-6"
               style={{ fontFamily: "system-ui, sans-serif" }}
