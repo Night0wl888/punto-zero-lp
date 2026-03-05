@@ -136,7 +136,7 @@ export default function LegacySection() {
     // Tall wrapper — scroll happens THROUGH this, sticky panel stays pinned
     <div
       ref={wrapperRef}
-      style={{ height: `${(slides.length + 1) * 100}vh`, position: "relative" }}
+      style={{ height: `${slides.length * 100}vh`, position: "relative" }}
     >
       <div
         style={{
