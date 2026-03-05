@@ -32,21 +32,17 @@ export default function PhilosophySection() {
 
   return (
     <section ref={ref} className="relative bg-[#0a0a0a] py-32 px-6 overflow-hidden">
-      {/* Large decorative text */}
+      {/* Large decorative logo */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
         aria-hidden
       >
-        <span
-          className="text-[#c8a96e]/[0.03] font-bold leading-none"
-          style={{
-            fontFamily: "'Georgia', serif",
-            fontSize: "clamp(8rem, 25vw, 22rem)",
-            letterSpacing: "-0.05em",
-          }}
-        >
-          PZ
-        </span>
+        <img
+          src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a8ff785be989ae9a64375e/4540abc4d_PUNTOZEROLOGO.png"
+          alt=""
+          className="w-[clamp(18rem,50vw,50rem)] opacity-[0.04]"
+          style={{ filter: "sepia(1) saturate(0)" }}
+        />
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
