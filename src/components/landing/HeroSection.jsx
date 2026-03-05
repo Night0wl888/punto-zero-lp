@@ -64,7 +64,39 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Main Title */}
-        
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.5 }}
+          className="mb-6">
+          <h1
+            className="text-[#f0e6d3] leading-tight"
+            style={{
+              fontFamily: "'Georgia', 'Times New Roman', serif",
+              fontSize: "clamp(2rem, 5.5vw, 4rem)",
+              letterSpacing: "-0.02em",
+              fontWeight: 700,
+              textShadow: "0 2px 40px rgba(0,0,0,0.6)"
+            }}>
+            Punto Zero
+          </h1>
+          <div className="flex items-center justify-center gap-4 mt-2">
+            <div className="h-px w-12 bg-[#c8a96e]/60" />
+            <span
+              className="text-[#c8a96e]"
+              style={{
+                fontFamily: "'Georgia', 'Times New Roman', serif",
+                fontSize: "clamp(0.9rem, 2vw, 1.2rem)",
+                letterSpacing: "0.12em",
+                fontStyle: "italic",
+                fontWeight: 400,
+              }}>
+              Donde la Tradición Encuentra su Origen
+            </span>
+            <div className="h-px w-12 bg-[#c8a96e]/60" />
+          </div>
+        </motion.div>
+
 
 
 
