@@ -31,6 +31,19 @@ const slides = [
 export default function LegacySection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const touchStartX = useRef(null);
+  const intervalRef = useRef(null);
+
+  const resetInterval = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setActiveIndex((i) => (i + 1) % slides.length);
+    }, 4000);
+  };
+
+  useEffect(() => {
+    resetInterval();
+    return () => clearInterval(intervalRef.current);
+  }, []);
 
   const goNext = () => setActiveIndex((i) => Math.min(slides.length - 1, i + 1));
   const goPrev = () => setActiveIndex((i) => Math.max(0, i - 1));
