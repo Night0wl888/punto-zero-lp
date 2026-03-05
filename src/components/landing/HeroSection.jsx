@@ -12,7 +12,7 @@ export default function HeroSection() {
           loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ filter: "sepia(60%) brightness(0.35) contrast(1.1)" }}>
+          style={{ filter: "sepia(30%) brightness(0.6) contrast(1.05)" }}>
 
           <source src="https://res.cloudinary.com/dfre8n8qn/video/upload/v1772685780/copy_9C5CF663-5038-43F6-A641-CCFFE2F1CF30_1_bchbad.mov" type="video/mp4" />
         </video>
