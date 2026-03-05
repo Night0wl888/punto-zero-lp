@@ -1,5 +1,6 @@
 import HeroSection from "@/components/landing/HeroSection";
 import WhatIsSection from "@/components/landing/WhatIsSection";
+import LegacySection from "@/components/landing/LegacySection";
 import PhilosophySection from "@/components/landing/PhilosophySection";
 import ComingSoonSection from "@/components/landing/ComingSoonSection";
 import AboutSection from "@/components/landing/AboutSection";
