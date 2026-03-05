@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const slides = [
@@ -28,96 +28,48 @@ const slides = [
   },
 ];
 
-function Slide({ slide, progress, index, total }) {
-  const start = index / total;
-  const end = (index + 1) / total;
-
-  const opacity = useTransform(progress, [
-    Math.max(0, start - 0.05),
-    start + 0.05,
-    end - 0.05,
-    Math.min(1, end + 0.05),
-  ], [0, 1, 1, 0]);
-
-  const y = useTransform(progress, [start, end], [40, -40]);
-
-  const isImageLeft = slide.layout === "image-left";
-
-  return (
-    <motion.div
-      style={{ opacity, y }}
-      className="absolute inset-0 flex items-center justify-center px-6"
-    >
-      <div className={`flex flex-col md:flex-row items-center gap-10 md:gap-16 max-w-5xl w-full ${isImageLeft ? "" : "md:flex-row-reverse"}`}>
-        {/* Image */}
-        <div className="w-full md:w-1/2 aspect-[4/5] relative overflow-hidden flex-shrink-0">
-          <img
-            src={slide.image}
-            alt={slide.title}
-            className="w-full h-full object-cover"
-            style={{ filter: "sepia(0.3) brightness(0.85) contrast(1.1)" }}
-          />
-          {/* Corner accents */}
-          <div className="absolute top-3 left-3 w-6 h-6 border-t border-l border-[#c8a96e]/50" />
-          <div className="absolute bottom-3 right-3 w-6 h-6 border-b border-r border-[#c8a96e]/50" />
-          {/* Grain overlay */}
-          <div
-            className="absolute inset-0 pointer-events-none opacity-30"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`,
-              backgroundSize: "128px 128px",
-            }}
-          />
-        </div>
-
-        {/* Text */}
-        <div className={`w-full md:w-1/2 text-${isImageLeft ? "left" : "right md:text-right"}`}>
-          <span
-            className="text-[#c8a96e]/60 text-xs tracking-[0.4em] uppercase block mb-4"
-            style={{ fontFamily: "system-ui, sans-serif" }}
-          >
-            {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-          </span>
-          <div className={`w-8 h-px bg-[#c8a96e]/40 mb-6 ${isImageLeft ? "" : "ml-auto"}`} />
-          <h3
-            className="text-[#f0e6d3] font-bold mb-5"
-            style={{
-              fontFamily: "'Georgia', serif",
-              fontSize: "clamp(1.5rem, 3vw, 2.4rem)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.2,
-            }}
-          >
-            {slide.title}
-          </h3>
-          <p
-            className="text-[#f0e6d3]/50 text-sm leading-relaxed"
-            style={{ fontFamily: "system-ui, sans-serif", fontWeight: 300 }}
-          >
-            {slide.description}
-          </p>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
 export default function LegacySection() {
   const containerRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = containerRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const totalScrollable = el.offsetHeight - window.innerHeight;
+      const scrolled = -rect.top;
+      const rawProgress = scrolled / totalScrollable;
+      const clamped = Math.max(0, Math.min(1, rawProgress));
+
+      setProgress(clamped);
+
+      const index = Math.min(
+        slides.length - 1,
+        Math.floor(clamped * slides.length)
+      );
+      setActiveIndex(index);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section ref={containerRef} style={{ height: `${slides.length * 100}vh` }} className="relative">
+    <section
+      ref={containerRef}
+      style={{ height: `${slides.length * 100}vh` }}
+      className="relative"
+    >
       {/* Sticky viewport */}
-      <div className="sticky top-0 h-screen bg-[#0a0a0a] overflow-hidden">
+      <div className="sticky top-0 h-screen bg-[#0a0a0a] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="absolute top-16 left-0 right-0 text-center z-10 px-6">
+        <div className="text-center pt-16 pb-4 px-6 flex-shrink-0">
           <span
-            className="text-[#c8a96e]/60 text-xs tracking-[0.4em] uppercase block mb-4"
+            className="text-[#c8a96e]/60 text-xs tracking-[0.4em] uppercase block mb-3"
             style={{ fontFamily: "system-ui, sans-serif" }}
           >
             Nuestra historia
@@ -126,10 +78,8 @@ export default function LegacySection() {
             className="text-[#f0e6d3] font-bold"
             style={{
               fontFamily: "'Georgia', serif",
-              fontSize: "clamp(1.1rem, 2.5vw, 1.8rem)",
+              fontSize: "clamp(1rem, 2vw, 1.6rem)",
               letterSpacing: "-0.01em",
-              maxWidth: "700px",
-              margin: "0 auto",
             }}
           >
             Honrando lo que fuimos,{" "}
@@ -137,36 +87,88 @@ export default function LegacySection() {
           </h2>
         </div>
 
-        {/* Slides */}
-        <div className="absolute inset-0 flex items-center justify-center" style={{ paddingTop: "120px" }}>
-          <div className="relative w-full h-full">
-            {slides.map((slide, i) => (
-              <Slide
-                key={i}
-                slide={slide}
-                progress={scrollYProgress}
-                index={i}
-                total={slides.length}
-              />
-            ))}
-          </div>
-        </div>
+        {/* Slides area */}
+        <div className="flex-1 relative">
+          {slides.map((slide, i) => {
+            const isActive = i === activeIndex;
+            const isImageLeft = slide.layout === "image-left";
 
-        {/* Progress dots */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-          {slides.map((_, i) => {
-            const start = i / slides.length;
-            const end = (i + 1) / slides.length;
             return (
               <motion.div
                 key={i}
-                style={{
-                  opacity: useTransform(scrollYProgress, [start, (start + end) / 2, end], [0.3, 1, 0.3]),
+                initial={false}
+                animate={{
+                  opacity: isActive ? 1 : 0,
+                  y: isActive ? 0 : (i < activeIndex ? -30 : 30),
                 }}
-                className="w-1.5 h-1.5 rounded-full bg-[#c8a96e]"
-              />
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                className="absolute inset-0 flex items-center justify-center px-6 md:px-16"
+              >
+                <div
+                  className={`flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-5xl w-full ${
+                    isImageLeft ? "" : "md:flex-row-reverse"
+                  }`}
+                >
+                  {/* Image */}
+                  <div className="w-full md:w-1/2 relative overflow-hidden flex-shrink-0"
+                    style={{ aspectRatio: "4/5", maxHeight: "55vh" }}
+                  >
+                    <img
+                      src={slide.image}
+                      alt={slide.title}
+                      className="w-full h-full object-cover"
+                      style={{ filter: "sepia(0.3) brightness(0.85) contrast(1.1)" }}
+                    />
+                    <div className="absolute top-3 left-3 w-6 h-6 border-t border-l border-[#c8a96e]/50" />
+                    <div className="absolute bottom-3 right-3 w-6 h-6 border-b border-r border-[#c8a96e]/50" />
+                  </div>
+
+                  {/* Text */}
+                  <div className={`w-full md:w-1/2 ${isImageLeft ? "text-left" : "text-left md:text-right"}`}>
+                    <span
+                      className="text-[#c8a96e]/60 text-xs tracking-[0.4em] uppercase block mb-3"
+                      style={{ fontFamily: "system-ui, sans-serif" }}
+                    >
+                      {String(i + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+                    </span>
+                    <div className={`w-8 h-px bg-[#c8a96e]/40 mb-5 ${isImageLeft ? "" : "md:ml-auto"}`} />
+                    <h3
+                      className="text-[#f0e6d3] font-bold mb-4"
+                      style={{
+                        fontFamily: "'Georgia', serif",
+                        fontSize: "clamp(1.4rem, 2.5vw, 2.2rem)",
+                        letterSpacing: "-0.02em",
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      {slide.title}
+                    </h3>
+                    <p
+                      className="text-[#f0e6d3]/50 text-sm leading-relaxed"
+                      style={{ fontFamily: "system-ui, sans-serif", fontWeight: 300 }}
+                    >
+                      {slide.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             );
           })}
+        </div>
+
+        {/* Progress dots */}
+        <div className="flex justify-center gap-2 pb-10 flex-shrink-0">
+          {slides.map((_, i) => (
+            <div
+              key={i}
+              className="rounded-full bg-[#c8a96e] transition-all duration-300"
+              style={{
+                width: i === activeIndex ? "24px" : "6px",
+                height: "6px",
+                opacity: i === activeIndex ? 1 : 0.3,
+              }}
+            />
+          ))}
         </div>
       </div>
     </section>
