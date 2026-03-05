@@ -14,7 +14,7 @@ export default function HypeSection() {
       {/* Background image with heavy overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1800&q=80"
+          src="https://i.pinimg.com/1200x/00/30/4a/00304a16887bc99398876b5923b0d77f.jpg"
           alt=""
           className="w-full h-full object-cover"
           style={{ filter: "sepia(50%) brightness(0.2) contrast(1.2)" }}
