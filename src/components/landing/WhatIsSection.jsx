@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import LazyImage from "@/components/landing/LazyImage";
 
 export default function WhatIsSection() {
   const ref = useRef(null);
