@@ -11,9 +11,10 @@ export default function HeroSection() {
     const playPromise = video.play();
     if (playPromise !== undefined) {
       playPromise.catch(() => {
-        // Retry on user interaction
-        const retry = () => {video.play();document.removeEventListener("touchstart", retry);};
+        // Retry on user interaction (touch or click)
+        const retry = () => { video.play(); };
         document.addEventListener("touchstart", retry, { once: true });
+        document.addEventListener("click", retry, { once: true });
       });
     }
   }, []);
