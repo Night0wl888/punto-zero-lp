@@ -34,7 +34,9 @@ export default function HeroSection() {
           className="absolute inset-0 w-full h-full object-cover"
           style={{}}>
 
-          <source src="https://res.cloudinary.com/dfre8n8qn/video/upload/v1772746868/copy_028F97FC-1079-4E4D-A791-22D5FD18FF3A_a6he8v.mov" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dfre8n8qn/video/upload/v1772746868/copy_028F97FC-1079-4E4D-A791-22D5FD18FF3A_a6he8v.mp4" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dfre8n8qn/video/upload/v1772746868/copy_028F97FC-1079-4E4D-A791-22D5FD18FF3A_a6he8v.webm" type="video/webm" />
+          <source src="https://res.cloudinary.com/dfre8n8qn/video/upload/v1772746868/copy_028F97FC-1079-4E4D-A791-22D5FD18FF3A_a6he8v.mov" type="video/quicktime" />
         </video>
         {/* Grain overlay */}
         <div className="opacity-0 absolute inset-0 z-10"
